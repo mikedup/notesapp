@@ -32,8 +32,6 @@ var APP = {
 
 	});
 
-	// Create Notes collection with data from sample array
-	// var noteList = new APP.Collections.Notes(JSON.parse(localStorage.getItem('MyNotes')));
 	var noteList = new APP.Collections.Notes();
 
 	// Individual article view
@@ -67,9 +65,10 @@ var APP = {
 		},
 
 		deleteNote: function() {
-			if (confirm("Are you sure you want to delete this note?")) {
-				this.model.destroy();
-			}
+			// if (confirm("Are you sure you want to delete this note?")) {
+			// 	this.model.destroy();
+			// }
+			this.model.destroy();
 			return false;
 		}
 
@@ -77,11 +76,9 @@ var APP = {
 
 
 	// Edit article view
-	APP.Views.EditNote = Backbone.View.extend({
+	APP.Views.AddNote = Backbone.View.extend({
 
-		el: '#edit-note',
-
-		template: _.template($('#edit-note-template').html()),
+		template: _.template($('#new-note-template').html()),
 
 		events: {
 			'click #save-note': 'saveNote'
@@ -92,31 +89,24 @@ var APP = {
 		},
 
 		render: function() {
-			this.$el.html(this.template(this.model.toJSON()));
+			this.$el.html(this.template).appendTo('#new-note');
 		},
 
 		saveNote: function(e) {
 			e.preventDefault();
 			var newTitle = this.$el.find('#new-title').val();
 			var newDesc = this.$el.find('#new-description').val();
+			var createdDate = new Date();
+			var newNote = new APP.Models.Note({
+				title: newTitle,
+				date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
+				description: newDesc
+			});
 
-			$('#edit-note').trigger('reveal:close');
-
-			// Need to add logic to only save if there has been a change
-			this.model.save({title: newTitle, description: newDesc});
-
+			noteList.create( newNote );
+			$('#new-note').trigger('reveal:close');
+			this.remove();
 		}
-
-	});
-
-	// Add article view
-	APP.Views.AddNote = APP.Views.EditNote.extend({
-
-		el: '#add-note',
-
-		template: _.template($('#add-note-template').html())
-
-		// Add new note model before render
 
 	});
 
@@ -148,12 +138,8 @@ var APP = {
 
 		addNote: function(e) {
 			e.preventDefault();
-			var createdDate = new Date();
-			var newNote = new APP.Models.Note({
-				date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear()
-			});
-
-			noteList.create( newNote );
+			var newNoteView = new APP.Views.AddNote();
+			$('#new-note').reveal();
 		}
 
 	});

@@ -23,28 +23,12 @@
 	</div>
 
 	<!-- Modals -->
-	<div id="add-note" class="reveal-modal"></div>
-	<div id="edit-note" class="reveal-modal"></div>
+	<div id="new-note" class="reveal-modal"></div>
 
 
 	<!-- Templates -->
-	<script type="text/template" id="edit-note-template">
-		<h2>Edit Note</h2>
-		<form action="">
-			<label for="new-title">
-				<b>Title:</b>
-				<input id="new-title" type="text" placeholder="<%= title %>" />
-			</label>
-			<label for="new-description">
-				<b>Description:</b>
-				<textarea id="new-description" placeholder="<%= description %>"></textarea>
-			</label>
-		</form>
-		<a href="#" id="save-note" class="button">Save changes</a>
-	</script>
-
-	<script type="text/template" id="add-note-template">
-		<h2>Add Note</h2>
+	<script type="text/template" id="new-note-template">
+		<h2>New Note</h2>
 		<form action="">
 			<label for="new-title">
 				<b>Title:</b>
