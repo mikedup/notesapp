@@ -36,12 +36,15 @@ var APP = {
 
 (function() {
 
+	// Grab date for later reference
+	var date = new Date();
+
 	// Individual note model
 	APP.Models.Note = Backbone.Model.extend({
 		
 		defaults: {
 			title: 'Title',
-			date: 'Date',
+			date: (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
 			description: 'Desc'
 		}
 
