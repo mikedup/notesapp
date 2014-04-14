@@ -78,6 +78,8 @@ var APP = {
 	// Edit article view
 	APP.Views.AddNote = Backbone.View.extend({
 
+		el: '#new-note',
+
 		template: _.template($('#new-note-template').html()),
 
 		events: {
@@ -89,7 +91,14 @@ var APP = {
 		},
 
 		render: function() {
-			this.$el.html(this.template).appendTo('#new-note');
+			this.$el.html(this.template);
+		},
+
+		remove: function() {
+			this.undelegateEvents();
+		    this.$el.empty();
+		    this.stopListening();
+		    return this;
 		},
 
 		saveNote: function(e) {
