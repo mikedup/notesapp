@@ -12,6 +12,7 @@ body {
 	margin: 40px auto;
 	max-width: 600px;
 	min-height: 230px;
+	position: relative;
 }
 
 // Header
@@ -50,6 +51,14 @@ header {
 		text-transform: uppercase;
 	}
 }
+.placeholder {
+	box-sizing: border-box;
+	color: #ccc;
+	padding: 40px 20px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
 
 // Buttons
 .button {
@@ -78,6 +87,7 @@ header {
 	padding:  0;
 }
 .note-list__item {
+	background-color: #fff;
 	border-top: 1px solid #eee;
 	cursor: pointer;
 	list-style-type: none;
@@ -120,14 +130,16 @@ header {
 		height: 0;
 	}
 	&:first-child {
-		padding-top: 55px;
+		padding-top: 70px;
 		.controls {
-			top: 45px;
+			top: 60px;
 		}
 		&:before {
+			background-color: #f2f2f2;
+			border-bottom: 1px solid #eee;
 			box-sizing: border-box;
 			color: #aaa;
-			content: 'Double-click to edit notes';
+			content: 'Double-click note to edit';
 			display: block;
 			font-size: 12px;
 			left: 0;
@@ -149,15 +161,15 @@ header {
 }
 .note-title {
 	color: #222;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 400;
 	margin: 0 0 10px 0;
 	text-transform: uppercase;
 }
 p.note-date {
-	font-size: 12px;
+	font-size: 10px;
 	color: #aaa;
-	margin-bottom: 10px;
+	margin-top: 15px;
 }
 .controls {
 	position: absolute; 

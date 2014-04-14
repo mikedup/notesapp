@@ -19,6 +19,7 @@
 			<h1>My Notes</h1>
 			<a href="#" id="add-note" class="button">+</a>
 		</header>
+		<p class="placeholder">You haven't added any notes yet.</p>
 		<ul id="note-list"></ul>
 	</div>
 
@@ -45,9 +46,9 @@
 	<script type="text/template" id="note-template">
 		<h2 class="note-title"><%= title %></h2>
 		<input class="note-title-field" type="text" value="<%= title %>" />
-		<p class="note-date">Date created: <%= date %></p>
 		<p class="note-description"><%= description %></p>
 		<textarea class="note-description-field"><%= description %></textarea>
+		<p class="note-date">Date created: <%= date %></p>
 		<a href="#" class="button -update">Update note</a>
 		<a href="#" class="button -cancel">Cancel</a>
 		<div class="controls">
