@@ -106,13 +106,15 @@ var APP = {
 			var newTitle = this.$el.find('#new-title').val();
 			var newDesc = this.$el.find('#new-description').val();
 			var createdDate = new Date();
-			var newNote = new APP.Models.Note({
-				title: newTitle,
-				date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
-				description: newDesc
-			});
+			if (newTitle) {
+				var newNote = new APP.Models.Note({
+					title: newTitle,
+					date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
+					description: newDesc
+				});
 
-			noteList.create( newNote );
+				noteList.create( newNote );
+			}
 			$('#new-note').trigger('reveal:close');
 			this.remove();
 		}
