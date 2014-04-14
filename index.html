@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+    	<meta name="description" content="">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<title>Article List</title>
+
+    	<link href='http://fonts.googleapis.com/css?family=Lato:100,400,700' rel='stylesheet' type='text/css'>
+    	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    	<link href='css/styles.css' rel='stylesheet' type='text/css'>
+    	<link href='css/reveal.css' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+	<div id="notes-app" class="container">
+		<header id="header">
+			<h1>My Notes</h1>
+			<a href="#" id="add-note" class="button">+</a>
+		</header>
+		<ul id="note-list"></ul>
+	</div>
+
+	<!-- Modals -->
+	<div id="add-note" class="reveal-modal"></div>
+	<div id="edit-note" class="reveal-modal"></div>
+
+
+	<!-- Templates -->
+	<script type="text/template" id="edit-note-template">
+		<h2>Edit Note</h2>
+		<form action="">
+			<label for="new-title">
+				<b>Title:</b>
+				<input id="new-title" type="text" placeholder="<%= title %>" />
+			</label>
+			<label for="new-description">
+				<b>Description:</b>
+				<textarea id="new-description" placeholder="<%= description %>"></textarea>
+			</label>
+		</form>
+		<a href="#" id="save-note" class="button">Save changes</a>
+	</script>
+
+	<script type="text/template" id="add-note-template">
+		<h2>Add Note</h2>
+		<form action="">
+			<label for="new-title">
+				<b>Title:</b>
+				<input id="new-title" type="text" placeholder="Note Title" />
+			</label>
+			<label for="new-description">
+				<b>Description:</b>
+				<textarea id="new-description" placeholder="Note Description"></textarea>
+			</label>
+		</form>
+		<a href="#" id="save-note" class="button">Save note</a>
+	</script>
+
+	<script type="text/template" id="note-template">
+		<h2><%= title %></h2>
+		<p class="author">Date created: <%= date %></p>
+		<p><%= description %></p>
+		<div class="controls">
+			<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
+			<a href="#" class="delete"><i class="fa fa-times"></i></a>
+		</div>
+	</script>
+        
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+	<script src="js/jquery.reveal.js"></script>
+	<script src="js/app.js"></script>
+
+</body>
+</html>
