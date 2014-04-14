@@ -44,7 +44,9 @@ var APP = {
 		template: _.template($('#note-template').html()),
 
 		events: {
-			'click .edit': 'editNote',
+			'dblclick': 'editNote',
+			'click .-update': 'saveChanges',
+			'click .-cancel': 'cancelChanges',
 			'click .delete': 'deleteNote'
 		},
 
@@ -59,9 +61,19 @@ var APP = {
 		},
 
 		editNote: function(e) {
-			e.preventDefault();
-			var editableNote = new APP.Views.EditNote({ model: this.model });
-			$('#edit-note').reveal();
+			this.$el.addClass('editing');
+		},
+
+		saveChanges: function() {
+			var newTitle = this.$el.find('.note-title-field').val();
+			var newDesc = this.$el.find('.note-description-field').val();
+
+			this.model.save({ title: newTitle, description: newDesc });
+			this.$el.removeClass('editing');
+		},
+
+		cancelChanges: function() {
+			this.$el.removeClass('editing');
 		},
 
 		deleteNote: function() {
@@ -75,7 +87,7 @@ var APP = {
 	});
 
 
-	// Edit article view
+	// Add note view
 	APP.Views.AddNote = Backbone.View.extend({
 
 		el: '#new-note',

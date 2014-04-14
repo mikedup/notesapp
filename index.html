@@ -43,11 +43,14 @@
 	</script>
 
 	<script type="text/template" id="note-template">
-		<h2><%= title %></h2>
-		<p class="author">Date created: <%= date %></p>
-		<p><%= description %></p>
+		<h2 class="note-title"><%= title %></h2>
+		<input class="note-title-field" type="text" value="<%= title %>" />
+		<p class="note-date">Date created: <%= date %></p>
+		<p class="note-description"><%= description %></p>
+		<textarea class="note-description-field"><%= description %></textarea>
+		<a href="#" class="button -update">Update note</a>
+		<a href="#" class="button -cancel">Cancel</a>
 		<div class="controls">
-			<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
 			<a href="#" class="delete"><i class="fa fa-times"></i></a>
 		</div>
 	</script>
