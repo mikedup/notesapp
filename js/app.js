@@ -1,30 +1,5 @@
 "use strict";
 
-// Sample Data
-var noteData = [
-	{ 
-  		"title": "App ideas", 
-  		"date": "4/9/2014",
-  		"description": "Donec pharetra ipsum massa, eget facilisis lorem tempus id. Nunc pretium dui quis mauris posuere venenatis. Proin ut auctor sapien. In ullamcorper tincidunt nisi sed placerat. Sed id justo augue."
-  	},
-  	{ 
-  		"title": "Recipes I need to try", 
-  		"date": "4/5/2014",
-  		"description": "In hac habitasse platea dictumst. Mauris nec vulputate elit, sit amet tempus tellus. Sed massa nulla, dictum a justo sit amet, pulvinar tempus velit. "
-  	},
-  	{ 
-  		"title": "Meeting notes", 
-  		"date": "4/3/2014",
-  		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed eleifend leo, a luctus neque. Integer ornare a diam at adipiscing. Curabitur lobortis eget risus id tempor."
-  	},
-  	{ 
-  		"title": "Songs to learn on guitar", 
-  		"date": "4/2/2014",
-  		"description": "ed vel tincidunt magna, id interdum massa. Nunc ac mauris sem. Integer lobortis, lectus quis faucibus molestie, risus justo fermentum elit, in pulvinar ligula risus quis sapien."
-  	}
-];
-
-
 // Notes App
 var APP = {
 
@@ -36,15 +11,12 @@ var APP = {
 
 (function() {
 
-	// Grab date for later reference
-	var date = new Date();
-
 	// Individual note model
 	APP.Models.Note = Backbone.Model.extend({
 		
 		defaults: {
 			title: 'Title',
-			date: (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear(),
+			date: '',
 			description: 'Desc'
 		}
 
@@ -54,12 +26,15 @@ var APP = {
 	// Note list collection
 	APP.Collections.Notes = Backbone.Collection.extend({
 		
-		model: APP.Models.Note
+		model: APP.Models.Note,
+
+		localStorage: new Backbone.LocalStorage('myNotes'),
 
 	});
 
 	// Create Notes collection with data from sample array
-	var noteList = new APP.Collections.Notes( noteData );
+	// var noteList = new APP.Collections.Notes(JSON.parse(localStorage.getItem('MyNotes')));
+	var noteList = new APP.Collections.Notes();
 
 	// Individual article view
 	APP.Views.Note = Backbone.View.extend({
@@ -127,9 +102,8 @@ var APP = {
 
 			$('#edit-note').trigger('reveal:close');
 
-			// Add logic to only save if there has been a change
-			this.model.set({title: newTitle, description: newDesc});
-			//this.remove();
+			// Need to add logic to only save if there has been a change
+			this.model.save({title: newTitle, description: newDesc});
 
 		}
 
@@ -157,6 +131,7 @@ var APP = {
 		},
 
 		initialize: function() {
+			this.collection.fetch();
 			this.listenTo(noteList, 'add', this.render);
 	    	this.render();
 		},
@@ -173,13 +148,17 @@ var APP = {
 
 		addNote: function(e) {
 			e.preventDefault();
-			var newNote = new APP.Models.Note();
-			noteList.add({ model: newNote });
+			var createdDate = new Date();
+			var newNote = new APP.Models.Note({
+				date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear()
+			});
+
+			noteList.create( newNote );
 		}
 
 	});
 
 
-	var notesApp = new APP.Views.Main({ collection: noteList });
+	APP.notesApp = new APP.Views.Main({ collection: noteList });
 
 }) ();
