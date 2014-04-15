@@ -15,7 +15,6 @@ var APP = {
 	APP.Models.Note = Backbone.Model.extend({
 		
 		defaults: {
-			id: '',
 			title: 'Title',
 			date: '',
 			description: 'Desc'
@@ -31,17 +30,23 @@ var APP = {
 
 		localStorage: new Backbone.LocalStorage('myNotes'),
 
+		initialize: function() {
+			this.listenTo(this, 'add', this.sort);
+		},
+
 		// Keep track of the length of this collection so we can assign id properties to notes for ordering
-		noteId: function() {
+		noteOrder: function() {
 	    	if (!this.length) return 1;
-	      	return this.last().get('id') - 1;
+	      	return this.first().get('order') + 1;
 	    },
 
-	    comparator: 'id'
-
+	    comparator: function(model) {
+	    	return -model.get('order');
+	    }
 	});
 
 	var noteList = new APP.Collections.Notes();
+
 
 	// Individual article view
 	APP.Views.Note = Backbone.View.extend({
@@ -129,7 +134,7 @@ var APP = {
 			var createdDate = new Date();
 			if (newTitle) {
 				var newNote = new APP.Models.Note({
-					id: noteList.noteId(),
+					order: noteList.noteOrder(),
 					title: newTitle,
 					date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
 					description: newDesc
