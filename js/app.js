@@ -165,7 +165,7 @@ var APP = {
 
 		events: {
 			'click #add-note': 'addNote',
-			'sortupdate #note-list': 'reorder'
+			'sortupdate #note-list': 'reorder' // sortupdate is an event fired when Sortable drag is complete
 		},
 
 		initialize: function() {
@@ -183,6 +183,10 @@ var APP = {
 	    	}, this);
 
 	    	this.makeSortable();
+
+	    	if (this.collection.length < 1) {
+	    		$('#welcome-message').addClass('-active');
+	    	}
 		},
 
 		renderNew: function(note) {
@@ -212,6 +216,7 @@ var APP = {
 			}
 		},
 
+		// Trigger a resort event for the individual note view to listen for
 		reorder: function(event) {
 			this.$('#note-list>li').trigger('resort');
 		}
