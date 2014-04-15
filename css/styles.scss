@@ -58,6 +58,18 @@ header {
 		display: block;
 	}
 }
+#instructions {
+	background-color: #f2f2f2;
+	color: #777;
+	display: none;
+	font-size: 12px;
+	margin: 0;
+	padding: 10px;
+	text-align: center;
+	&.-active {
+		display: block;
+	}
+}
 
 // Buttons
 .button {

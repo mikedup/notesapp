@@ -99,6 +99,7 @@ var APP = {
 			// Display 'you have no notes' message if deleting the last note
 			if (noteList.length < 1) {
 				$('#welcome-message').addClass('-active');
+				$('#instructions').removeClass('-active');
 			}
 		},
 
@@ -193,6 +194,7 @@ var APP = {
 			// Hide 'you have no notes' message once a note exists
 			if(this.collection.length > 0) {
 	    		this.$('#welcome-message').removeClass('-active');
+	    		this.$('#instructions').addClass('-active');
 	    	}
 		},
 
