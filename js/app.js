@@ -95,7 +95,11 @@ var APP = {
 
 		deleteNote: function() {
 			this.model.destroy();
-			return false;
+			
+			// Display 'you have no notes' message if deleting the last note
+			if (noteList.length < 1) {
+				$('#welcome-message').addClass('-active');
+			}
 		},
 
 		reorder: function() {
@@ -185,6 +189,11 @@ var APP = {
 			this.$('#note-list').prepend(newNote.render().el);
 
 			this.makeSortable();
+
+			// Hide 'you have no notes' message once a note exists
+			if(this.collection.length > 0) {
+	    		this.$('#welcome-message').removeClass('-active');
+	    	}
 		},
 
 		addNote: function(e) {

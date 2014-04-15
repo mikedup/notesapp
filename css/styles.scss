@@ -54,6 +54,9 @@ header {
 	padding: 40px 20px;
 	text-align: center;
 	width: 100%;
+	&.-active {
+		display: block;
+	}
 }
 
 // Buttons
