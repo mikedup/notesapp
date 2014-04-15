@@ -15,9 +15,10 @@ var APP = {
 	APP.Models.Note = Backbone.Model.extend({
 		
 		defaults: {
-			title: 'Title',
+			title: 'Note Title',
 			date: '',
-			description: 'Desc'
+			description: 'Note Description',
+			order: ''
 		}
 
 	});
@@ -43,6 +44,7 @@ var APP = {
 	    comparator: function(model) {
 	    	return -model.get('order');
 	    }
+
 	});
 
 	var noteList = new APP.Collections.Notes();
@@ -61,7 +63,8 @@ var APP = {
 			'dblclick': 'editNote',
 			'click .-update': 'saveChanges',
 			'click .-cancel': 'cancelChanges',
-			'click .delete': 'deleteNote'
+			'click .delete': 'deleteNote',
+			'resort': 'reorder'
 		},
 
 		initialize: function() {
@@ -91,11 +94,12 @@ var APP = {
 		},
 
 		deleteNote: function() {
-			// if (confirm("Are you sure you want to delete this note?")) {
-			// 	this.model.destroy();
-			// }
 			this.model.destroy();
 			return false;
+		},
+
+		reorder: function() {
+			this.model.save({ order: this.$el.parent().length - this.$el.index() });
 		}
 
 	});
@@ -137,7 +141,7 @@ var APP = {
 					order: noteList.noteOrder(),
 					title: newTitle,
 					date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
-					description: newDesc
+					description: newDesc 
 				});
 
 				noteList.create( newNote );
@@ -155,7 +159,8 @@ var APP = {
 		el: '#notes-app',
 
 		events: {
-			'click #add-note': 'addNote'
+			'click #add-note': 'addNote',
+			'sortupdate #note-list': 'reorder'
 		},
 
 		initialize: function() {
@@ -171,17 +176,33 @@ var APP = {
 				});
 				this.$('#note-list').append(note.render().el);
 	    	}, this);
+
+	    	this.makeSortable();
 		},
 
 		renderNew: function(note) {
 			var newNote = new APP.Views.Note({ model: note });
 			this.$('#note-list').prepend(newNote.render().el);
+
+			this.makeSortable();
 		},
 
 		addNote: function(e) {
 			e.preventDefault();
 			var newNoteView = new APP.Views.AddNote();
 			$('#new-note').reveal();
+		},
+
+		makeSortable: function() {
+			var $el = $('#note-list');
+
+			if (this.collection.length) {
+				$el.sortable(); 
+			}
+		},
+
+		reorder: function(event) {
+			this.$('#note-list>li').trigger('resort');
 		}
 
 	});

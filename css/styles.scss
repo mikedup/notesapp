@@ -12,6 +12,7 @@ body {
 	margin: 40px auto;
 	max-width: 600px;
 	min-height: 230px;
+	padding-bottom: 10px;
 	position: relative;
 }
 
@@ -31,7 +32,7 @@ header {
 	}
 	h1 {
 		color: #fff;
-		font-size: 30px;
+		font-size: 32px;
 		font-weight: 100;
 		float: left;
 		margin: 0;
@@ -46,11 +47,11 @@ header {
 		padding: 4px 11px;
 	}
 }
-.placeholder {
+#welcome-message {
+	display: none;
 	box-sizing: border-box;
 	color: #ccc;
 	padding: 40px 20px;
-	position: absolute;
 	text-align: center;
 	width: 100%;
 }
@@ -123,25 +124,9 @@ header {
 		clear: both;
 		height: 0;
 	}
-	&:first-child {
-		padding-top: 60px;
+	&:hover {
 		.controls {
-			top: 50px;
-		}
-		&:before {
-			background-color: #f2f2f2;
-			border-bottom: 1px solid #eee;
-			box-sizing: border-box;
-			color: #aaa;
-			content: 'Double-click note to edit';
 			display: block;
-			font-size: 12px;
-			left: 0;
-			padding: 10px 0;
-			position: absolute;
-			text-align: center;
-			top: 0;
-			width: 100%;
 		}
 	}
 	&.editing {
@@ -166,6 +151,7 @@ p.note-date {
 	margin-top: 15px;
 }
 .controls {
+	display: none;
 	position: absolute; 
 	right: 20px;
 	top: 15px;
@@ -181,6 +167,15 @@ p.note-date {
 		font-size: 18px;
 		padding: 10px 5px;
 	}
+}
+.sortable-placeholder {
+	background-color: #f2f2f2;
+	border: {
+		top: 2px dashed #dfdfdf;
+		bottom: 2px dashed #dfdfdf;
+	}
+	list-style-type: none;
+	min-height: 100px;
 }
 
 // Add note modal
