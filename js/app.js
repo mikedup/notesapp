@@ -145,18 +145,22 @@ var APP = {
 
 		initialize: function() {
 			this.collection.fetch();
-			this.listenTo(noteList, 'add', this.render);
+			this.listenTo(noteList, 'add', this.renderNew);
 	    	this.render();
 		},
 
 		render: function() {
-			this.$('#note-list').empty();
 	    	_.each(this.collection.models, function (item) {
 	        	var note = new APP.Views.Note({
 					model: item
 				});
 				this.$('#note-list').append(note.render().el);
 	    	}, this);
+		},
+
+		renderNew: function(note) {
+			var newNote = new APP.Views.Note({ model: note });
+			this.$('#note-list').prepend(newNote.render().el);
 		},
 
 		addNote: function(e) {
