@@ -187,6 +187,9 @@ var APP = {
 	    	if (this.collection.length < 1) {
 	    		$('#welcome-message').addClass('-active');
 	    	}
+	    	if(this.collection.length > 0) {
+	    		this.$('#instructions').addClass('-active');
+	    	}
 		},
 
 		renderNew: function(note) {
