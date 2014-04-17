@@ -15,10 +15,21 @@ var APP = {
 	APP.Models.Note = Backbone.Model.extend({
 		
 		defaults: {
-			title: 'Note Title',
+			title: '',
 			date: '',
-			description: 'Note Description',
+			description: '',
 			order: ''
+		}
+
+	});
+
+
+	// Tag model
+	APP.Models.Tag = Backbone.Model.extend({
+		
+		defaults: {
+			name: '',
+			notes: []
 		}
 
 	});
@@ -29,9 +40,10 @@ var APP = {
 		
 		model: APP.Models.Note,
 
-		localStorage: new Backbone.LocalStorage('myNotes'),
+		localStorage: new Backbone.LocalStorage('Notes'),
 
 		initialize: function() {
+			this.fetch();
 			this.listenTo(this, 'add', this.sort);
 		},
 
@@ -47,10 +59,39 @@ var APP = {
 
 	});
 
-	var noteList = new APP.Collections.Notes();
+	
+	// Tag collection
+	APP.Collections.Tags = Backbone.Collection.extend({
+
+		model: APP.Models.Tag,
+
+		localStorage : new Backbone.LocalStorage('Tags'),
+
+		initialize: function () {
+			this.fetch();
+		},
+
+		addTags: function(noteId, tagArray) {
+			// Loop through newTags array and create new tag models if they don't exist
+			_.each(tagArray, function(tagName) {
+				var existingTag = tags.findWhere({ name: tagName });
+
+				if (existingTag) {
+					var notes = existingTag.get('notes');
+					notes.push(noteId);
+				} else {
+					tags.create({
+						name: tagName,
+						notes: [noteId]
+					});
+				}
+			}, this);
+		}
+
+	});
 
 
-	// Individual article view
+	// Individual note view
 	APP.Views.Note = Backbone.View.extend({
 
 		tagName: 'li',
@@ -140,16 +181,24 @@ var APP = {
 			e.preventDefault();
 			var newTitle = this.$el.find('#new-title').val();
 			var newDesc = this.$el.find('#new-description').val();
+			var newTags = this.$el.find('#tags').val().split(' ');
 			var createdDate = new Date();
 			if (newTitle) {
-				var newNote = new APP.Models.Note({
+				// Create new note model
+				var newNote = new APP.Models.Note ({
 					order: noteList.noteOrder(),
 					title: newTitle,
 					date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
-					description: newDesc 
+					description: newDesc
 				});
 
-				noteList.create( newNote );
+				// Add new note to notList collection
+				noteList.create(newNote);	
+
+				// Pass new note id and tags array to the addTags method from tags collection
+				var noteId = newNote.get('id');	
+
+				tags.addTags(noteId, newTags);	
 			}
 			$('#new-note').trigger('reveal:close');
 			this.remove();
@@ -169,7 +218,6 @@ var APP = {
 		},
 
 		initialize: function() {
-			this.collection.fetch();
 			this.listenTo(noteList, 'add', this.renderNew);
 	    	this.render();
 		},
@@ -226,6 +274,10 @@ var APP = {
 
 	});
 
+	APP.noteList = new APP.Collections.Notes();
+	var noteList= APP.noteList;
+	APP.tags = new APP.Collections.Tags();
+	var tags = APP.tags;
 
 	APP.notesApp = new APP.Views.Main({ collection: noteList });
 

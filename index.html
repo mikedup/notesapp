@@ -40,6 +40,10 @@
 				<b>Description:</b>
 				<textarea id="new-description" placeholder="Note Description"></textarea>
 			</label>
+			<label for="tags">
+				<b>Tags:</b>
+				<input id="tags" type="text" placeholder="Add a tag" />
+			</label>
 		</form>
 		<a href="#" id="save-note" class="button">Save note</a>
 	</script>
@@ -47,7 +51,7 @@
 	<script type="text/template" id="note-template">
 		<h2 class="note-title"><%= title %></h2>
 		<input class="note-title-field" type="text" value="<%= title %>" />
-		<p class="note-description"><%= description %></p>
+		<% if (description) { %><p class="note-description"><%= description %></p><% } %>
 		<textarea class="note-description-field"><%= description %></textarea>
 		<p class="note-date">Date created: <%= date %></p>
 		<a href="#" class="button -update">Update note</a>
