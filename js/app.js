@@ -76,10 +76,13 @@ var APP = {
 			_.each(tagArray, function(tagName) {
 				var existingTag = tags.findWhere({ name: tagName });
 
+				// If tag already exists, push new id to notes property
 				if (existingTag) {
 					var notes = existingTag.get('notes');
 					notes.push(noteId);
-				} else {
+				} 
+				// Otherwise, create a new tag model
+				else {
 					tags.create({
 						name: tagName,
 						notes: [noteId]
