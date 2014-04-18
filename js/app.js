@@ -58,6 +58,8 @@ var APP = {
 		addTags: function(noteId, tagArray) {
 			// Loop through newTags array and create new tag models if they don't exist
 			_.each(tagArray, function(tagName) {
+        if (tagName === '') return;
+
 				var existingTag = tags.findWhere({ name: tagName });
 
 				// If tag already exists, push new id to notes property
@@ -73,6 +75,10 @@ var APP = {
 					});
 				}
 			}, this);
+
+      // trigger 'tags-added' event on note
+      var note = noteList.get(noteId);
+      noteList.trigger('tags-changed', note);
 		},
 
     getNoteTags: function(noteId) {
@@ -84,7 +90,6 @@ var APP = {
         // Check if it containes noteId. If it does, push tag name attribute to noteTags array
         if (notes.indexOf(noteId) > -1) {
           noteTags.push(tag.get('name'));
-          console.log(tag.get('name'));
         }
       }, this);   
 
@@ -112,17 +117,17 @@ var APP = {
 		},
 
 		initialize: function() {
+      this.tags = tags.getNoteTags(this.model.get('id'));
+
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
-
-      this.tags = tags.getNoteTags(this.model.get('id'));
 		},
 
 		render: function() {
       var noteData = $.extend({}, this.model.attributes, {tags: this.tags});
-			this.$el.html(this.template(noteData));
 
-			return this;
+			this.$el.html(this.template(noteData));
+      return this;
 		},
 
 		editNote: function(e) {
@@ -192,15 +197,12 @@ var APP = {
 			var createdDate = new Date();
 			if (newTitle) {
 				// Create new note model
-				var newNote = new APP.Models.Note ({
-					order: noteList.noteOrder(),
-					title: newTitle,
-					date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
-					description: newDesc
-				});
-
-				// Add new note to notList collection
-				noteList.create(newNote);	
+				var newNote = noteList.create({
+          order: noteList.noteOrder(),
+          title: newTitle,
+          date: (createdDate.getMonth() + 1) + "/" + createdDate.getDate() + "/" + createdDate.getFullYear(),
+          description: newDesc
+        }); 
 
 				// Pass new note id and tags array to the addTags method from tags collection
 				var noteId = newNote.get('id');	
@@ -225,7 +227,7 @@ var APP = {
 		},
 
 		initialize: function() {
-			this.listenTo(noteList, 'add', this.renderNew);
+			this.listenTo(noteList, 'tags-changed', this.renderNew);
 	    this.render();
 		},
 
@@ -234,6 +236,7 @@ var APP = {
 	        var note = new APP.Views.Note({
   					model: item
   				});
+
 				  this.$('#note-list').append(note.render().el);
 	    	}, this);
 
