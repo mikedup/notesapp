@@ -53,6 +53,13 @@
     <input class="note-title-field" type="text" value="<%= title %>" />
     <% if (description) { %><p class="note-description"><%= description %></p><% } %>
     <textarea class="note-description-field"><%= description %></textarea>
+    <% if (tags.length) { %>
+      <ul>
+      <% for(var tag in tags) { %>
+        <li><%= tags[tag] %></li>
+      <% } %>
+      </ul>
+    <% } %>
     <p class="note-date">Date created: <%= date %></p>
     <a href="#" class="button -update">Update note</a>
     <a href="#" class="button -cancel">Cancel</a>
