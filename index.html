@@ -54,9 +54,9 @@
     <% if (description) { %><p class="note-description"><%= description %></p><% } %>
     <textarea class="note-description-field"><%= description %></textarea>
     <% if (tags.length) { %>
-      <ul>
+      <ul class="note-tags">
       <% for(var tag in tags) { %>
-        <li><%= tags[tag] %></li>
+        <li><a href=""><%= tags[tag] %></a></li>
       <% } %>
       </ul>
     <% } %>
