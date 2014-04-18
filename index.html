@@ -1,73 +1,73 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-    	<meta name="description" content="">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<title>Notes App</title>
+  <meta charset="utf-8">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Notes App</title>
 
-    	<link href='http://fonts.googleapis.com/css?family=Lato:100,400,700' rel='stylesheet' type='text/css'>
-    	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    	<link href='css/styles.css' rel='stylesheet' type='text/css'>
-    	<link href='css/reveal.css' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Lato:100,400,700' rel='stylesheet' type='text/css'>
+      <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+      <link href='css/styles.css' rel='stylesheet' type='text/css'>
+      <link href='css/reveal.css' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 
-	<div id="notes-app" class="container">
-		<header id="header">
-			<h1>My Notes</h1>
-			<a href="#" id="add-note" class="button">+</a>
-		</header>
-		<p id="welcome-message">You haven't added any notes yet.</p>
-		<p id="instructions">Double-click notes to edit. Drag to rearrange.</p>
-		<ul id="note-list"></ul>
-	</div>
+  <div id="notes-app" class="container">
+    <header id="header">
+      <h1>My Notes</h1>
+      <a href="#" id="add-note" class="button">+</a>
+    </header>
+    <p id="welcome-message">You haven't added any notes yet.</p>
+    <p id="instructions">Double-click notes to edit. Drag to rearrange.</p>
+    <ul id="note-list"></ul>
+  </div>
 
-	<!-- Modals -->
-	<div id="new-note" class="reveal-modal"></div>
+  <!-- Modals -->
+  <div id="new-note" class="reveal-modal"></div>
 
 
-	<!-- Templates -->
-	<script type="text/template" id="new-note-template">
-		<h2>New Note</h2>
-		<form action="">
-			<label for="new-title">
-				<b>Title:</b>
-				<input id="new-title" type="text" placeholder="Note Title" />
-			</label>
-			<label for="new-description">
-				<b>Description:</b>
-				<textarea id="new-description" placeholder="Note Description"></textarea>
-			</label>
-			<label for="tags">
-				<b>Tags:</b>
-				<input id="tags" type="text" placeholder="Add a tag" />
-			</label>
-		</form>
-		<a href="#" id="save-note" class="button">Save note</a>
-	</script>
+  <!-- Templates -->
+  <script type="text/template" id="new-note-template">
+    <h2>New Note</h2>
+    <form action="">
+      <label for="new-title">
+        <b>Title:</b>
+        <input id="new-title" type="text" placeholder="Note Title" />
+      </label>
+      <label for="new-description">
+        <b>Description:</b>
+        <textarea id="new-description" placeholder="Note Description"></textarea>
+      </label>
+      <label for="tags">
+        <b>Tags:</b>
+        <input id="tags" type="text" placeholder="Add a tag" />
+      </label>
+    </form>
+    <a href="#" id="save-note" class="button">Save note</a>
+  </script>
 
-	<script type="text/template" id="note-template">
-		<h2 class="note-title"><%= title %></h2>
-		<input class="note-title-field" type="text" value="<%= title %>" />
-		<% if (description) { %><p class="note-description"><%= description %></p><% } %>
-		<textarea class="note-description-field"><%= description %></textarea>
-		<p class="note-date">Date created: <%= date %></p>
-		<a href="#" class="button -update">Update note</a>
-		<a href="#" class="button -cancel">Cancel</a>
-		<div class="controls">
-			<a href="#" class="delete"><i class="fa fa-times"></i></a>
-		</div>
-	</script>
+  <script type="text/template" id="note-template">
+    <h2 class="note-title"><%= title %></h2>
+    <input class="note-title-field" type="text" value="<%= title %>" />
+    <% if (description) { %><p class="note-description"><%= description %></p><% } %>
+    <textarea class="note-description-field"><%= description %></textarea>
+    <p class="note-date">Date created: <%= date %></p>
+    <a href="#" class="button -update">Update note</a>
+    <a href="#" class="button -cancel">Cancel</a>
+    <div class="controls">
+      <a href="#" class="delete"><i class="fa fa-times"></i></a>
+    </div>
+  </script>
         
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-	<script src="js/jquery.reveal.js"></script>
-	<script src="js/jquery.sortable.js"></script>
-	<script src="js/backbone.localStorage.js"></script>
-	<script src="js/app.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+  <script src="js/jquery.reveal.js"></script>
+  <script src="js/jquery.sortable.js"></script>
+  <script src="js/backbone.localStorage.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>
