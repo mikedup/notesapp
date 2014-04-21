@@ -9,8 +9,7 @@ var APP = {
 
 };
 
-(function() {
-
+$(document).ready(function() {
 	// Individual note model
 	APP.Models.Note = Backbone.Model.extend({});
 
@@ -37,9 +36,9 @@ var APP = {
 	      	return this.first().get('order') + 1;
 	    },
 
-	    comparator: function(model) {
-	    	return -model.get('order');
-	    }
+    comparator: function(model) {
+    	return -model.get('order');
+    }
 
 	});
 
@@ -76,7 +75,7 @@ var APP = {
 				}
 			}, this);
 
-      // trigger 'tags-added' event on note
+      // trigger 'tags-added' event on note for main view to re-render
       var note = noteList.get(noteId);
       noteList.trigger('tags-changed', note);
 		},
@@ -291,4 +290,4 @@ var APP = {
 
 	APP.notesApp = new APP.Views.Main({ collection: noteList });
 
-}) ();
+});
